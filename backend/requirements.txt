@@ -1,0 +1,7 @@
+fastapi
+langgraph
+langchain-groq
+dotenv
+SQLAlchemy
+alembic
+pymysql

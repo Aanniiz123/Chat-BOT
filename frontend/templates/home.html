@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Chatbot</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <div class="app-shell">
+
+
+        <!--Side Bar -->
+        {% include 'sidebar.html' %}
+        <!--  Side bar end -->
+
+        <main class="main">
+            <header class="topbar">
+                <button type="button" class="icon-btn" id="sidebar-open" aria-label="Open sidebar">☰</button>
+                <h1 class="topbar__title">New chat</h1>
+                <select class="model-select" aria-label="Select model">
+                    <option>GPT-4.1</option>
+                    <option>Claude 3.5</option>
+                    <option>Gemini 2.0</option>
+                </select>
+                <button type="button" class="icon-btn" aria-label="More options">⋯</button>
+            </header>
+
+            <section class="chat" aria-live="polite">
+                {% if not prompt and not response and not error %}
+                    <div class="welcome">
+                        <div class="welcome__badge">AI workspace</div>
+                        <h2>How can I help you today?</h2>
+                        <div class="suggestions">
+                            <button type="button" class="suggestion">Explain a concept simply</button>
+                            <button type="button" class="suggestion">Write a short email</button>
+                            <button type="button" class="suggestion">Debug my code</button>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if prompt %}
+                    <div class="message message--user">
+                        <div class="message__avatar">U</div>
+                        <div class="message__body">{{ prompt }}</div>
+                    </div>
+                {% endif %}
+
+                {% if response %}
+                    <div class="message message--assistant">
+                        <div class="message__avatar">AI</div>
+                        <div class="message__body">{{ response }}</div>
+                    </div>
+                {% endif %}
+
+                {% if error %}
+                    <div class="message message--assistant">
+                        <div class="message__avatar">AI</div>
+                        <div class="message__body">{{ error }}</div>
+                    </div>
+                {% endif %}
+            </section>
+
+
+            {% include 'footer.html' %}
+
+        </main>
+    </div>
+</body>
+
+</html>

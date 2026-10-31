@@ -1,0 +1,36 @@
+
+
+{% block content %}
+
+
+<aside class="sidebar">
+    <div class="sidebar__top">
+        <a href="/" class="brand">
+            <span class="brand__mark">AI</span>
+            <span>NovaChat</span>
+        </a>
+        <button type="button" class="icon-btn" id="sidebar-close" aria-label="Close sidebar">✕</button>
+    </div>
+
+    <a href="/" class="new-chat">+ New chat</a>
+
+    <nav class="history" aria-label="Recent chats">
+        <p class="history__label">Recent</p>
+        <a href="#" class="history__item is-active">Product strategy review</a>
+        <a href="#" class="history__item">Landing page copy</a>
+        <a href="#" class="history__item">Code refactor sprint</a>
+        <a href="#" class="history__item">Customer research notes</a>
+    </nav>
+
+    <div class="sidebar__bottom">
+        <a href="#" class="sidebar__link">Settings</a>
+        <a href="#" class="sidebar__link">Help & feedback</a>
+        <div class="profile">
+            <span class="profile__avatar">U</span>
+            <span class="profile__name">User</span>
+        </div>
+    </div>
+</aside>
+
+
+{% endblock %}
