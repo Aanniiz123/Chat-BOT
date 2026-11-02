@@ -22,6 +22,7 @@
 html, body {
     height: 100%;
     margin: 0;
+    overflow: hidden;
 }
 
 body {
@@ -52,12 +53,14 @@ button, select, textarea {
 .app-shell {
     display: flex;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
     backdrop-filter: blur(12px);
 }
 
 .sidebar {
     width: var(--sidebar-w);
+    height: 100vh;
     background: var(--bg-sidebar);
     border-right: 1px solid var(--border);
     display: flex;
@@ -65,6 +68,7 @@ button, select, textarea {
     padding: 18px 16px 14px;
     flex-shrink: 0;
     box-shadow: inset -1px 0 0 rgba(255,255,255,0.02);
+    overflow: hidden;
 }
 
 .sidebar__top {
@@ -110,12 +114,10 @@ button, select, textarea {
     background: var(--bg-hover);
     transform: translateY(-1px);
 }
-
 .history {
-    flex: 1;
-    overflow-y: auto;
+    --row-h: 40px;     /* height of one chat row */
+    --row-gap: 4px;    /* space between rows */
     margin-top: 18px;
-    padding-right: 4px;
 }
 
 .history__label {
@@ -126,9 +128,44 @@ button, select, textarea {
     color: var(--text-soft);
 }
 
+/* The scrolling area: exactly 4 rows visible */
+.history__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--row-gap);
+    max-height: calc(var(--row-h) * 4 + var(--row-gap) * 3);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 4px;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+}
+
+.history__list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.history__list::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.3);
+    border-radius: 999px;
+}
+
+.history__row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: var(--row-h);
+    flex-shrink: 0;            /* rows keep their height instead of squashing */
+    box-sizing: border-box;
+}
+
 .history__item {
     display: block;
+    flex: 1;
+    min-width: 0;
     padding: 9px 10px;
+    line-height: 22px;         /* 9 + 22 + 9 = 40px, matches --row-h */
     border-radius: 10px;
     color: var(--text-soft);
     font-size: 0.93rem;
@@ -144,10 +181,41 @@ button, select, textarea {
     color: var(--text);
 }
 
+.history__delete-form {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.history__delete-btn {
+    width: 28px;
+    height: 28px;
+    border: 1px solid rgba(239, 68, 68, 0.45);
+    border-radius: 8px;
+    background: rgba(239, 68, 68, 0.08);
+    color: #ff6b6b;
+    cursor: pointer;
+    transition: 0.18s ease;
+}
+
+.history__delete-btn:hover {
+    background: rgba(239, 68, 68, 0.18);
+    border-color: rgba(239, 68, 68, 0.7);
+    color: #ff8787;
+}
+
+.history__empty {
+    display: block;
+    padding: 10px 8px;
+    color: var(--text-soft);
+    font-size: 0.9rem;
+}
 .sidebar__bottom {
     border-top: 1px solid var(--border);
     padding-top: 14px;
     margin-top: 12px;
+    flex-shrink: 0;
 }
 
 .sidebar__link {
@@ -190,6 +258,7 @@ button, select, textarea {
     display: flex;
     flex-direction: column;
     min-width: 0;
+    min-height: 0;
 }
 
 .topbar {
